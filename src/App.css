@@ -1,0 +1,55 @@
+
+
+body {
+  font-family: 'Arial', sans-serif;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #f4f4f4;
+}
+
+.container {
+  text-align: center;
+}
+
+h1 {
+  color: #333;
+}
+
+.task-input-container {
+  margin-bottom: 10px;
+}
+
+.task-input-container input {
+  padding: 8px;
+  margin-right: 5px;
+}
+
+.task-list {
+  list-style: none;
+  padding: 0;
+}
+
+.task-list li {
+  display: flex;
+  align-items: center;
+  margin-bottom: 5px;
+}
+
+.task-list li span {
+  flex-grow: 1;
+  cursor: pointer;
+}
+
+.task-list li button {
+  margin-left: 5px;
+  padding: 5px;
+  cursor: pointer;
+  background-color: #ff6464;
+  color: #fff;
+  border: none;
+  border-radius: 3px;
+}
