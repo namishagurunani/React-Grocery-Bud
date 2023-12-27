@@ -1,12 +1,16 @@
-// src/TaskList.js
 import React from 'react';
 
 const TaskList = ({ tasks, onDelete, onToggleCompletion }) => {
   return (
-    <ul>
+    <ul className="task-list">
       {tasks.map((task) => (
-        <li key={task.id} style={{ textDecoration: task.completed ? 'line-through' : 'none' }}>
-          <span onClick={() => onToggleCompletion(task.id)}>{task.description}</span>
+        <li key={task.id} className={task.completed ? 'completed' : ''}>
+          <input
+            type="checkbox"
+            checked={task.completed}
+            onChange={() => onToggleCompletion(task.id)}
+          />
+          <span>{task.description}</span>
           <button onClick={() => onDelete(task.id)}>Delete</button>
         </li>
       ))}

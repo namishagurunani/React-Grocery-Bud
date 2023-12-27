@@ -19,27 +19,35 @@ const App = () => {
   };
 
   const toggleTaskCompletion = (taskId) => {
-    setTasks(tasks.map((task) => (task.id === taskId ? { ...task, completed: !task.completed } : task)));
+    setTasks((prevTasks) =>
+      prevTasks.map((task) => (task.id === taskId ? { ...task, completed: !task.completed } : task))
+    );
   };
 
   const clearCompletedTasks = () => {
-    setTasks(tasks.filter((task) => !task.completed));
+    setTasks((prevTasks) => prevTasks.filter((task) => !task.completed));
   };
 
   return (
-    <div>
-      <h1>LocalTasker</h1>
+    <div style={{ boxShadow: '0 0 5px black', padding: '20px 80px' }}>
       <div>
-        <input
-          type="text"
-          value={taskInput}
-          onChange={(e) => setTaskInput(e.target.value)}
-          placeholder="Enter task description"
-        />
-        <button onClick={addTask}>Add Task</button>
+        <h1>Grocery Bud</h1>
+        <div>
+          <input
+            type="text"
+            value={taskInput}
+            onChange={(e) => setTaskInput(e.target.value)}
+            placeholder="Enter task description"
+          />
+          <button className="add-item" onClick={addTask}>
+            Add Item
+          </button>
+        </div>
+        <TaskList tasks={tasks} onDelete={deleteTask} onToggleCompletion={toggleTaskCompletion} />
+        <button className="delete-item" onClick={clearCompletedTasks}>
+          Clear Completed
+        </button>
       </div>
-      <TaskList tasks={tasks} onDelete={deleteTask} onToggleCompletion={toggleTaskCompletion} />
-      <button onClick={clearCompletedTasks}>Clear Completed</button>
     </div>
   );
 };
