@@ -1,31 +1,48 @@
-// src/App.js
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import TaskList from './TaskList';
 import './App.css';
 
 const App = () => {
+  // Load tasks from local storage on component mount
+  useEffect(() => {
+    const storedTasks = JSON.parse(localStorage.getItem('tasks')) || [];
+    setTasks(storedTasks);
+  }, []);
+
   const [tasks, setTasks] = useState([]);
   const [taskInput, setTaskInput] = useState('');
 
   const addTask = () => {
     if (taskInput.trim() !== '') {
-      setTasks([...tasks, { id: Date.now(), description: taskInput, completed: false }]);
+      const newTask = { id: Date.now(), description: taskInput, completed: false };
+      setTasks([...tasks, newTask]);
       setTaskInput('');
+      updateLocalStorage([...tasks, newTask]);
     }
   };
 
   const deleteTask = (taskId) => {
-    setTasks(tasks.filter((task) => task.id !== taskId));
+    const updatedTasks = tasks.filter((task) => task.id !== taskId);
+    setTasks(updatedTasks);
+    updateLocalStorage(updatedTasks);
   };
 
   const toggleTaskCompletion = (taskId) => {
-    setTasks((prevTasks) =>
-      prevTasks.map((task) => (task.id === taskId ? { ...task, completed: !task.completed } : task))
+    const updatedTasks = tasks.map((task) =>
+      task.id === taskId ? { ...task, completed: !task.completed } : task
     );
+    setTasks(updatedTasks);
+    updateLocalStorage(updatedTasks);
   };
 
   const clearCompletedTasks = () => {
-    setTasks((prevTasks) => prevTasks.filter((task) => !task.completed));
+    const updatedTasks = tasks.filter((task) => !task.completed);
+    setTasks(updatedTasks);
+    updateLocalStorage(updatedTasks);
+  };
+
+  const updateLocalStorage = (updatedTasks) => {
+    localStorage.setItem('tasks', JSON.stringify(updatedTasks));
   };
 
   return (
